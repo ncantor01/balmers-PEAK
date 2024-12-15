@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://bmowalsc2f7xh"]
+
+[ext_resource type="Script" path="res://window.gd" id="1_hcb70"]
+[ext_resource type="PackedScene" uid="uid://bbuy6vc12o5p3" path="res://terminal_area.tscn" id="2_iakl5"]
+[ext_resource type="PackedScene" uid="uid://gniyfxkk82a1" path="res://top_bar_area.tscn" id="4_pj8fp"]
+
+[node name="Window" type="Node2D" node_paths=PackedStringArray("selected_area")]
+position = Vector2(44, 86)
+script = ExtResource("1_hcb70")
+selected_area = NodePath("TerminalArea")
+
+[node name="TopBarArea" parent="." instance=ExtResource("4_pj8fp")]
+scale = Vector2(0.711125, 1)
+
+[node name="TerminalArea" parent="." instance=ExtResource("2_iakl5")]
+position = Vector2(26, 22)
+scale = Vector2(0.754453, 0.782953)
+font_size = 50
