@@ -1,7 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://bbuy6vc12o5p3"]
+[gd_scene load_steps=3 format=3 uid="uid://bbuy6vc12o5p3"]
 
 [ext_resource type="Script" path="res://TerminalArea.gd" id="1_ry0mf"]
-[ext_resource type="Texture2D" uid="uid://bdgkchkmp0pp5" path="res://Among_Us_Crewmate.webp" id="2_2ysky"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_irxsr"]
 size = Vector2(356, 296)
@@ -13,7 +12,19 @@ script = ExtResource("1_ry0mf")
 position = Vector2(168, 138)
 shape = SubResource("RectangleShape2D_irxsr")
 
-[node name="AmongUsCrewmate" type="Sprite2D" parent="."]
-position = Vector2(161, 123)
-scale = Vector2(0.477629, 0.433333)
-texture = ExtResource("2_2ysky")
+[node name="TextEdit" type="TextEdit" parent="."]
+modulate = Color(0.941176, 0, 0.588235, 1)
+offset_left = -11.0
+offset_top = -11.0
+offset_right = 347.0
+offset_bottom = 282.0
+editable = false
+context_menu_enabled = false
+shortcut_keys_enabled = false
+selecting_enabled = false
+deselect_on_focus_loss_enabled = false
+drag_and_drop_selection_enabled = false
+virtual_keyboard_enabled = false
+middle_mouse_paste_enabled = false
+wrap_mode = 1
+autowrap_mode = 1

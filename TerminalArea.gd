@@ -6,6 +6,7 @@ class_name TerminalArea extends WindowArea
 var current_line:RichTextLabel;
 var all_lines:Array[RichTextLabel];
 var shape:RectangleShape2D;
+var buffer:String = "";
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -20,7 +21,6 @@ func _process(delta):
 
 func do(event:InputEvent):
 	if event is InputEventKey:
-		print(event)
 		if event.is_pressed():
 			if event.is_action_pressed("ui_text_newline", true):
 				print(create_newline())
@@ -35,10 +35,10 @@ func do(event:InputEvent):
 				print("CTRL COMMAND")
 			else:
 				current_line.add_text(fix_punctuation(event))
-				print(current_line.text)
 
 func prepare_font(newline:RichTextLabel) -> void:
-	newline.push_font_size(font_size)
+	pass
+	#newline.push_font_size(font_size)
 	
 func create_newline() -> String:
 	var command = ""
@@ -59,22 +59,23 @@ func create_newline() -> String:
 	if current_line != null:
 		var textLine:TextLine = TextLine.new()
 		textLine.add_string(current_line.get_parsed_text(), font, font_size)
-		print(int(floor(textLine.get_line_width())))
-		print(int(floor(shape.size.x)))
-		print((int(floor(textLine.get_line_width())) / int(round(shape.size.x))))
-		newline_adjust = (int(floor(textLine.get_line_width())) / int(round(shape.size.x))) * font_size
+		newline_adjust = (int(ceil(textLine.get_size().x / shape.size.x))) * textLine.get_size().y
 	
 	if newline_position.y >= shape.size.y:
 		#Move up the line at the top and make it invisible
 		for i in all_lines:
 			i.position.y -= newline_adjust
-		var back_line:RichTextLabel = all_lines.pop_front()
-		back_line.visible = false
+		all_lines[0].visible = false
+		all_lines.remove_at(0)
 	else:
 		newline_position += Vector2(0,newline_adjust)
 	current_line = newline
 	all_lines.append(newline)
 	return command
+
+func type_in_terminal(x:InputEventKey):
+	pass
+	
 
 func fix_punctuation(x:InputEventKey) -> String:
 	var keycode = x.keycode
@@ -90,9 +91,9 @@ func fix_punctuation(x:InputEventKey) -> String:
 				return ';'
 			KEY_APOSTROPHE:
 				return '\''
-			KEY_BRACELEFT:
+			KEY_BRACKETLEFT:
 				return '['
-			KEY_BRACERIGHT:
+			KEY_BRACKETRIGHT:
 				return ']'
 			KEY_BACKSLASH:
 				return '\\'
@@ -124,9 +125,9 @@ func fix_punctuation(x:InputEventKey) -> String:
 				return ':'
 			KEY_APOSTROPHE:
 				return '"'
-			KEY_BRACELEFT:
+			KEY_BRACKETLEFT:
 				return '{'
-			KEY_BRACERIGHT:
+			KEY_BRACKETRIGHT:
 				return '}'
 			KEY_BACKSLASH:
 				return '|'
@@ -145,6 +146,6 @@ func fix_punctuation(x:InputEventKey) -> String:
 			KEY_F1, KEY_F2, KEY_F3, KEY_F4, KEY_F5, KEY_F6, KEY_F7, KEY_F8, KEY_F9, KEY_F10:
 				return ''
 			_:
-				return x.as_text_key_label().to_upper()
+				return String.chr(keycode)
 	return ""
 	
