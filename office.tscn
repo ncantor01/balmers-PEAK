@@ -1,19 +1,24 @@
-[gd_scene load_steps=7 format=3 uid="uid://d0ts60frqvcoc"]
+[gd_scene load_steps=6 format=3 uid="uid://d0ts60frqvcoc"]
 
 [ext_resource type="PackedScene" uid="uid://uxcwkkdwkdf0" path="res://desk.glb" id="1_8y4j4"]
-[ext_resource type="Script" path="res://Level.gd" id="1_kllbn"]
+[ext_resource type="Script" path="res://Level3D.gd" id="1_kllbn"]
 [ext_resource type="PackedScene" uid="uid://dhc1h785xfgwy" path="res://PoorSap.tscn" id="3_4yocv"]
-[ext_resource type="PackedScene" uid="uid://bmowalsc2f7xh" path="res://window.tscn" id="5_cx4xw"]
 [ext_resource type="PackedScene" uid="uid://cwxa7hejt60sp" path="res://pc_asset.tscn" id="5_irlt3"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_fnxtl"]
-size = Vector3(1000, 1, 1000)
+[sub_resource type="BoxShape3D" id="BoxShape3D_q1od0"]
+size = Vector3(11.1959, 1.979, 6.54688)
 
-[node name="Office" type="Node3D" node_paths=PackedStringArray("player", "PC_level")]
+[node name="Office" type="Node3D" node_paths=PackedStringArray("player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6, 0)
 script = ExtResource("1_kllbn")
 player = NodePath("PoorSap")
-PC_level = NodePath("Window")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 7.71088, 8.55656, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.27164, -2.93433, 2.77344)
+shape = SubResource("BoxShape3D_q1od0")
 
 [node name="desk" parent="." instance=ExtResource("1_8y4j4")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 2)
@@ -26,15 +31,6 @@ transform = Transform3D(0.403542, -0.763611, 0.504037, -0.331459, 0.391457, 0.85
 
 [node name="PoorSap" parent="." instance=ExtResource("3_4yocv")]
 transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 7.71088, 8.55656, 0)
-
-[node name="StaticBody3D" type="StaticBody3D" parent="."]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -5.85118, 0)
-shape = SubResource("BoxShape3D_fnxtl")
-
-[node name="Window" parent="." instance=ExtResource("5_cx4xw")]
-visible = false
 
 [node name="PC_asset" parent="." instance=ExtResource("5_irlt3")]
 transform = Transform3D(0.258819, 0, 0.965926, 0, 1, 0, -0.965926, 0, 0.258819, 0, 0.207992, 0)

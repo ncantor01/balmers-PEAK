@@ -18,7 +18,8 @@ var grav_vel: Vector3 # Gravity velocity
 var jump_vel: Vector3 # Jumping velocity
 
 var interactable: Interactable = null
-var current_pc: ProgramWindow = null
+var current_2d_level : ProgramWindow = null
+var current_3d_level : Level3D = null
 
 var interactRay: RayCast3D
 
@@ -36,6 +37,11 @@ func _unhandled_input(event: InputEvent) -> void:
 		print(interactable)
 		if interactable != null:
 			interactable.interact(self)
+	elif event.is_action("uninteract"):
+		print("uninteract")
+		print(interactable)
+		if interactable != null:
+			interactable.uninteract(self)
 	if Input.is_action_just_pressed(&"exit"): get_tree().quit()
 
 func _physics_process(delta: float) -> void:
@@ -71,9 +77,24 @@ func _gravity(delta: float) -> Vector3:
 func enter_pc():
 	print("EnteringPC")
 	Input.mouse_mode = Input.MOUSE_MODE_CONFINED
-	if current_pc != null:
-		current_pc.visible = true
+	if current_2d_level != null and current_3d_level != null:
+		current_2d_level.visible = true
+		current_3d_level.visible = false
+
+func exit_pc():
+	print("ExitingPC")
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	if current_2d_level != null and current_3d_level != null:
+		current_2d_level.visible = false
+		current_3d_level.visible = true
+	
 
 func set_current_pc(pc:ProgramWindow):
-	current_pc = pc
+	current_2d_level = pc
+
+func get_current_pc():
+	return current_2d_level
+	
+func set_current_3d_level(level:Level3D):
+	current_3d_level = level
 	

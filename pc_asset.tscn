@@ -83,8 +83,9 @@ albedo_texture = SubResource("ViewportTexture_x8spu")
 [sub_resource type="BoxShape3D" id="BoxShape3D_xv2tm"]
 size = Vector3(3.79758, 4.72955, 4.74545)
 
-[node name="PC_asset" type="Node3D"]
+[node name="PC_asset" type="Node3D" node_paths=PackedStringArray("WindowDisplayer")]
 script = ExtResource("1_gy7eb")
+WindowDisplayer = NodePath("SubViewportContainer/SubViewport")
 
 [node name="Cylinder" type="MeshInstance3D" parent="."]
 transform = Transform3D(2, 0, 0, 0, -0.092168, 0, 0, 0, 2, -0.00124311, -0.0240808, -0.00908768)
@@ -106,6 +107,7 @@ render_target_update_mode = 4
 [node name="Window" parent="SubViewportContainer/SubViewport" instance=ExtResource("2_5ywhi")]
 
 [node name="PC_body" type="StaticBody3D" parent="."]
+collision_layer = 3
 script = ExtResource("3_5rikv")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PC_body"]
